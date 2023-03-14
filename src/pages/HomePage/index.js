@@ -11,7 +11,7 @@ function HomePage() {
 
 	const getIssues = async () => {
 		const octokit = new Octokit({
-			auth: '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',
+			auth: process.env.REACT_APP_GITHUB_ACCESS_TOKEN, //숨겨야하는지?
 		})
 
 		const result = await octokit.request(

@@ -8,7 +8,7 @@ const DetailPage = () => {
 
 	const getIssue = async () => {
 		const octokit = new Octokit({
-			auth: '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',
+			auth: process.env.REACT_APP_GITHUB_ACCESS_TOKEN,
 		})
 
 		const result = await octokit.request(
