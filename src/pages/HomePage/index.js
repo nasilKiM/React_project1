@@ -1,6 +1,7 @@
 import { Octokit } from 'octokit'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import IssueContent from './components/IssueContent'
 
 function HomePage() {
 	const [result, setResult] = useState([])
@@ -27,7 +28,7 @@ function HomePage() {
 			},
 		)
 		setResult(result.data)
-		console.log(result)
+		console.log('====>', result)
 	}
 	useEffect(() => {
 		getIssues()
@@ -64,7 +65,7 @@ function HomePage() {
 							navigate(`/issue/${v.number}`)
 						}}
 					>
-						{v.title}
+						<IssueContent issue={v} />
 					</div>
 				)
 			})}

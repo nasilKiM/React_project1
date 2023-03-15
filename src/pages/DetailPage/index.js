@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Octokit } from 'octokit'
 import { useParams } from 'react-router-dom'
+import CommentBoard from './components/CommentBoard'
+import CommentInput from './components/CommentInput'
+import IssueDetail from './components/IssueDetail'
+// import IssueDetail from './components/IssueDetail'
 
 const DetailPage = () => {
 	const { id } = useParams()
@@ -23,16 +27,22 @@ const DetailPage = () => {
 			},
 		)
 		setResult(result.data)
-		console.log(result)
+		console.log('detailpage result', result) //왜 안읽혀?
 	}
+
 	useEffect(() => {
 		getIssue()
 	}, [id])
 
+	console.log('넘기기전', result)
+
 	return (
 		<div>
 			디테일페이지{id}
-			{JSON.stringify(result)}
+			{/* {JSON.stringify(result)} */}
+			<IssueDetail result={result} />
+			<CommentBoard />
+			<CommentInput />
 		</div>
 	)
 }
