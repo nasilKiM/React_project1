@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { flexAlignCenter } from 'styles/common'
 
 function BasicFooter() {
 	return (
@@ -18,11 +19,12 @@ const Container = styled.div`
 	background-color: #000000;
 	color: #ffffff;
 	padding: 20px;
+	min-height: 10vh;
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 	& > p {
 		margin: 0;
+		${flexAlignCenter}
 	}
 `
 

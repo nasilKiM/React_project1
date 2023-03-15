@@ -1,6 +1,9 @@
 import { Octokit } from 'octokit'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import styled from 'styled-components'
+import ContentFiltering from './components/Filtering/ContentFilteringOpt'
+import ContentListFiltering from './components/Filtering/ContentListFilteringOpt'
 import IssueContent from './components/IssueContent'
 
 function HomePage() {
@@ -58,6 +61,10 @@ function HomePage() {
 
 	return (
 		<div>
+			<S.Filters>
+				<ContentFiltering />
+				<ContentListFiltering />
+			</S.Filters>
 			{result.map(v => {
 				return (
 					<div
@@ -94,3 +101,13 @@ function HomePage() {
 }
 
 export default HomePage
+
+const Filters = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	margin: 5px 50px 5px 0;
+`
+
+const S = {
+	Filters,
+}

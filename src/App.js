@@ -1,9 +1,11 @@
 import Routing from 'routes/Routing'
+import GlobalStyles from 'styles/global'
 
 function App() {
 	return (
-		<div className="App">
+		<div>
 			<Routing />
+			<GlobalStyles />
 		</div>
 	)
 }
