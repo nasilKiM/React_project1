@@ -5,9 +5,9 @@ function IssueContent({ issue }) {
 	return (
 		<S.Wrapper>
 			<S.FirstLine>
-				<div>#{issue.number}</div>
-				<div>{issue.title}</div>
-				<div>Comments {issue.comments}</div>
+				<h3>#{issue.number}</h3>
+				<h3>{issue.title}</h3>
+				<h3>Comments {issue.comments}</h3>
 			</S.FirstLine>
 			<S.Body>{issue.body}</S.Body>
 			<S.LastLine>
@@ -24,6 +24,8 @@ const Wrapper = styled.div`
 	height: 20vh;
 	margin: 5vh 5vh;
 	display: flex;
+	border: 1px solid gray;
+	border-radius: 5px;
 	flex-direction: column;
 	${flexCenter}
 `
@@ -36,6 +38,7 @@ const FirstLine = styled.div`
 const Body = styled.div`
 	height: 15vh;
 	width: 100%;
+	margin: 20px;
 
 	overflow: hidden;
 	text-overflow: ellipsis;

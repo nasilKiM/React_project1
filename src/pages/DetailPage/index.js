@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom'
 import CommentBoard from './components/CommentBoard'
 import CommentInput from './components/CommentInput'
 import IssueDetail from './components/IssueDetail'
-// import IssueDetail from './components/IssueDetail'
 
 const DetailPage = () => {
 	const { id } = useParams()
@@ -40,7 +39,7 @@ const DetailPage = () => {
 		<div>
 			디테일페이지{id}
 			{/* {JSON.stringify(result)} */}
-			<IssueDetail result={result} />
+			<IssueDetail />
 			<CommentBoard />
 			<CommentInput />
 		</div>
