@@ -76,7 +76,7 @@ function HomePage() {
 					</div>
 				)
 			})}
-			<div>
+			<S.Flex>
 				<button onClick={firstPage}>맨처음</button>
 				<button onClick={prevPage}>이전</button>
 				<div>
@@ -95,12 +95,20 @@ function HomePage() {
 				</div>
 				<button onClick={nextPage}>다음</button>
 				<button onClick={lastPage}>맨끝</button>
-			</div>
+			</S.Flex>
 		</div>
 	)
 }
 
 export default HomePage
+
+const Flex = styled.div`
+	width: 50%;
+	margin: 0 auto;
+	display: flex;
+	padding: 40px;
+	justify-content: space-between;
+`
 
 const Filters = styled.div`
 	display: flex;
@@ -109,5 +117,6 @@ const Filters = styled.div`
 `
 
 const S = {
+	Flex,
 	Filters,
 }
