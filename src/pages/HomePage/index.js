@@ -1,6 +1,7 @@
-import { Octokit } from 'octokit'
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { getIssue } from 'reducer/loading'
 import styled from 'styled-components'
 import ContentFiltering from './components/Filtering/ContentFilteringOpt'
 import ContentListFiltering from './components/Filtering/ContentListFilteringOpt'
@@ -9,35 +10,25 @@ import Pagination from './components/Pagination'
 
 function HomePage() {
 	const [page, setPage] = useState(1)
-
-	const [result, setResult] = useState([])
 	const navigate = useNavigate()
 
-	const getIssues = async () => {
-		const octokit = new Octokit({
-			auth: process.env.REACT_APP_GITHUB_ACCESS_TOKEN, //.env처리함
-		})
+	const list = useSelector(state => state.issue.lists)
 
-		const result = await octokit.request(
-			'GET /repos/angular/angular-cli/issues',
-			{
-				owner: 'angular',
-				repo: 'angular-cli',
-				headers: {
-					// 깃허브에 담아보내는거
-				},
-				per_page: 10,
-				page: page, // 페이지네이션
-			},
-		)
-		setResult(result.data)
-		console.log('====>', result)
+	//로딩중
+	const loading = useSelector(state => state.issue.loading)
+	const dispatch = useDispatch()
+
+	console.log('const list ', list)
+	const getIssues = async () => {
+		dispatch(getIssue({ page }))
 	}
 	useEffect(() => {
+		console.log('useEffect', list)
 		getIssues()
 	}, [page])
 
-	console.log(result)
+	//loading중 아이콘 적용해보기
+	if (loading) return 'Loading 중'
 
 	return (
 		<div>
@@ -45,7 +36,7 @@ function HomePage() {
 				<ContentFiltering />
 				<ContentListFiltering />
 			</S.Filters>
-			{result.map(v => {
+			{list.map(v => {
 				return (
 					<div
 						onClick={() => {
@@ -56,7 +47,7 @@ function HomePage() {
 					</div>
 				)
 			})}
-			<Pagination result={result} page={page} setPage={setPage} />
+			<Pagination result={list} page={page} setPage={setPage} />
 		</div>
 	)
 }

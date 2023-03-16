@@ -26,7 +26,7 @@ const DetailPage = () => {
 			},
 		)
 		setResult(result.data)
-		console.log('detailpage result', result) //왜 안읽혀?
+		console.log('detailpage result', result)
 	}
 
 	useEffect(() => {
