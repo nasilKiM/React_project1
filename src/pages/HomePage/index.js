@@ -5,24 +5,24 @@ import styled from 'styled-components'
 import ContentFiltering from './components/Filtering/ContentFilteringOpt'
 import ContentListFiltering from './components/Filtering/ContentListFilteringOpt'
 import IssueContent from './components/IssueContent'
+import Pagination from './components/Pagination'
 
 function HomePage() {
-	const [result, setResult] = useState([])
 	const [page, setPage] = useState(1)
-	const page1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-	const page2 = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+	const [result, setResult] = useState([])
 	const navigate = useNavigate()
 
 	const getIssues = async () => {
 		const octokit = new Octokit({
-			auth: process.env.REACT_APP_GITHUB_ACCESS_TOKEN, //숨겨야하는지?
+			auth: process.env.REACT_APP_GITHUB_ACCESS_TOKEN, //.env처리함
 		})
 
 		const result = await octokit.request(
 			'GET /repos/angular/angular-cli/issues',
 			{
-				owner: 'OWNER',
-				repo: 'REPO',
+				owner: 'angular',
+				repo: 'angular-cli',
 				headers: {
 					// 깃허브에 담아보내는거
 				},
@@ -38,26 +38,6 @@ function HomePage() {
 	}, [page])
 
 	console.log(result)
-
-	const nextPage = () => {
-		if (page > 19) return
-		setPage(page + 1)
-	}
-
-	const prevPage = () => {
-		if (page <= 1) return
-		setPage(page - 1)
-	}
-
-	const pagnation = page <= 10 ? page1 : page2
-
-	const firstPage = () => {
-		setPage(1)
-	}
-
-	const lastPage = () => {
-		setPage(20)
-	}
 
 	return (
 		<div>
@@ -76,39 +56,12 @@ function HomePage() {
 					</div>
 				)
 			})}
-			<S.Flex>
-				<button onClick={firstPage}>맨처음</button>
-				<button onClick={prevPage}>이전</button>
-				<div>
-					{pagnation.map(p => {
-						return (
-							<button
-								onClick={() => {
-									setPage(p)
-								}}
-								style={{ color: page === p ? 'red' : 'black' }}
-							>
-								{p}
-							</button>
-						)
-					})}
-				</div>
-				<button onClick={nextPage}>다음</button>
-				<button onClick={lastPage}>맨끝</button>
-			</S.Flex>
+			<Pagination result={result} page={page} setPage={setPage} />
 		</div>
 	)
 }
 
 export default HomePage
-
-const Flex = styled.div`
-	width: 50%;
-	margin: 0 auto;
-	display: flex;
-	padding: 40px;
-	justify-content: space-between;
-`
 
 const Filters = styled.div`
 	display: flex;
@@ -117,6 +70,5 @@ const Filters = styled.div`
 `
 
 const S = {
-	Flex,
 	Filters,
 }

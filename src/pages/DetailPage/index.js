@@ -17,8 +17,8 @@ const DetailPage = () => {
 		const result = await octokit.request(
 			`GET /repos/angular/angular-cli/issues/${id}`,
 			{
-				owner: 'OWNER',
-				repo: 'REPO',
+				owner: 'angular',
+				repo: 'angular-cli',
 				issue_number: id,
 				headers: {
 					// 깃허브에 담아보내는거
@@ -37,10 +37,10 @@ const DetailPage = () => {
 
 	return (
 		<div>
-			디테일페이지{id}
+			{/* 디테일페이지{id} */}
 			{/* {JSON.stringify(result)} */}
-			<IssueDetail />
-			<CommentBoard />
+			{result && <IssueDetail result={result} />}
+			{result && <CommentBoard result={result} />}
 			<CommentInput />
 		</div>
 	)
