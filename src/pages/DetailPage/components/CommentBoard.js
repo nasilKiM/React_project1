@@ -1,25 +1,47 @@
-// 코멘트가 쌓이는 곳
+// 코멘트가 쌓이는 곳 + map 돌리기
 
-import styled from 'styled-components'
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getComments } from 'reducer/loading';
+import styled from 'styled-components';
+import CommentBoardContent from './CommentBoardContent';
 
-function CommentBoard({ result }) {
+function CommentBoard({ number }) {
+	const dispatch = useDispatch();
+	const state = useSelector(state => state.issue.comments);
+
+	useEffect(() => {
+		dispatch(getComments(number));
+	}, []);
+
 	return (
-		<S.Container>
-			<h2>Comments</h2>
-			<div>{result.comments}</div>
-		</S.Container>
-	)
+		<S.Wrapper>
+			{state.length > 0 ? (
+				state.map(item => <CommentBoardContent issue={item} />)
+			) : (
+				<S.Board>댓글이 없습니다.</S.Board>
+			)}
+		</S.Wrapper>
+	);
 }
 
-export default CommentBoard
+export default CommentBoard;
 
-const Container = styled.div`
+const Wrapper = styled.div`
 	width: 80%;
-	padding: 60px;
-	border: 1px dotted purple;
-	margin: 10px auto;
-`
+	padding: 50px;
+	margin: 0 auto;
+`;
+
+const Board = styled.div`
+	width: 100%;
+	border: 1px dashed lightgray;
+	border-radius: 50px;
+	padding: 20px;
+	margin-bottom: 20px;
+`;
 
 const S = {
-	Container,
-}
+	Wrapper,
+	Board,
+};

@@ -2,21 +2,21 @@
 
 //
 
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
 const CommentInput = ({ onSubmit }) => {
-	const [comment, setComment] = useState('')
+	const [comment, setComment] = useState('');
 
 	const handleCommentChange = event => {
-		setComment(event.target.value)
-	}
+		setComment(event.target.value);
+	};
 
 	const handleSubmit = event => {
-		event.preventDefault()
-		onSubmit(comment)
-		setComment('')
-	}
+		event.preventDefault();
+		onSubmit(comment);
+		setComment('');
+	};
 
 	return (
 		<S.CommentForm onSubmit={handleSubmit}>
@@ -29,10 +29,10 @@ const CommentInput = ({ onSubmit }) => {
 			</S.CommentInputContainer>
 			<S.CommentButton type="submit">Comment</S.CommentButton>
 		</S.CommentForm>
-	)
-}
+	);
+};
 
-export default CommentInput
+export default CommentInput;
 
 const CommentForm = styled.form`
 	width: 80%;
@@ -43,14 +43,14 @@ const CommentForm = styled.form`
 	@media screen and (max-width: 600px) {
 		flex-direction: column-reverse;
 	}
-`
+`;
 
 const CommentInputContainer = styled.div`
 	width: 100%;
 	@media screen and (max-width: 600px) {
 		margin-bottom: 8px;
 	}
-`
+`;
 
 const ComInput = styled.textarea`
 	width: 100%;
@@ -72,7 +72,7 @@ const ComInput = styled.textarea`
 		padding: 8px;
 		margin-bottom: 8px;
 	}
-`
+`;
 const CommentButton = styled.button`
 	width: 100px;
 	align-self: flex-end;
@@ -92,11 +92,11 @@ const CommentButton = styled.button`
 		font-size: 14px;
 		padding: 8px;
 	}
-`
+`;
 
 const S = {
 	ComInput,
 	CommentForm,
 	CommentButton,
 	CommentInputContainer,
-}
+};
