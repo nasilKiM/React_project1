@@ -8,10 +8,15 @@ import { Octokit } from 'octokit';
 
 // value
 const initialState = {
-	loading: false,
+	// loading: false,
 	lists: [],
 	details: [],
 	comments: [],
+	getIssueState: {
+		loading: true,
+		done: false,
+		err: null,
+	},
 };
 
 const octokit = new Octokit({
@@ -58,54 +63,49 @@ export const getComments = createAsyncThunk('issue/getComments', async id => {
 	return result.data;
 });
 
-//issue 리스트 호출관련
 export const issueSlice = createSlice({
 	name: 'issue',
 	initialState,
 	reducers: {},
 	extraReducers: {
+		//issue 리스트 호출
 		[getIssue.pending.type]: (state, action) => {
 			// 호출 전
-			state.loading = true;
+			state.getIssueState.loading = true;
 		},
 		[getIssue.fulfilled.type]: (state, action) => {
 			// 성공
-			state.loading = false;
-			state.lists = action.payload;
+			state.getIssueState.loading = false;
+			state.getIssueState.lists = action.payload;
 		},
 		[getIssue.rejected.type]: (state, action) => {
 			// 실패
-			state.loading = false;
-			state.lists = [];
+			state.getIssueState.loading = false;
+			state.getIssueState.lists = [];
 		},
 		//디테일페이지
 		[getDetails.pending.type]: (state, action) => {
-			// 호출 전
-			state.loading = true;
+			state.getIssueState.loading = true;
 		},
 		[getDetails.fulfilled.type]: (state, action) => {
-			// 성공
-			state.loading = false;
-			state.details = action.payload;
+			state.getIssueState.loading = false;
+			state.getIssueState.details = action.payload;
 		},
 		[getDetails.rejected.type]: (state, action) => {
-			// 실패
-			state.loading = false;
-			state.details = [];
+			state.getIssueState.loading = false;
+			state.getIssueState.details = [];
 		},
+		//코멘트
 		[getComments.pending.type]: (state, action) => {
-			// 호출 전
-			state.loading = true;
+			state.getIssueState.loading = true;
 		},
 		[getComments.fulfilled.type]: (state, action) => {
-			// 성공
-			state.loading = false;
-			state.comments = action.payload;
+			state.getIssueState.loading = false;
+			state.getIssueState.comments = action.payload;
 		},
 		[getComments.rejected.type]: (state, action) => {
-			// 실패
-			state.loading = false;
-			state.comments = [];
+			state.getIssueState.loading = false;
+			state.getIssueState.comments = [];
 		},
 	},
 });

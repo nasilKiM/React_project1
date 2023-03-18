@@ -7,6 +7,7 @@ import ContentFiltering from './components/Filtering/ContentFilteringOpt';
 import ContentListFiltering from './components/Filtering/ContentListFilteringOpt';
 import IssueContent from './components/IssueContent';
 import Pagination from './components/Pagination';
+// import Pagination2 from 'components/Layout/Pagination/Pagination';
 
 function HomePage() {
 	const [page, setPage] = useState(1);
@@ -15,6 +16,25 @@ function HomePage() {
 
 	const list = useSelector(state => state.issue.lists);
 	const loading = useSelector(state => state.issue.loading);
+
+	//===========================================//
+
+	// const AllIssue = 200;
+	// const getIssueState = useSelector(state => state.issue.getIssueState);
+
+	// const { owner, repository, page, per_page } = useParams();
+
+	// const getData = useCallback(async () => {
+	// 	dispatch(getIssue({ owner, repository, page, per_page }));
+	// }, [page, per_page]);
+
+	// useEffect(() => {
+	// 	if (getIssueState.loading === true) {
+	// 	}
+	// 	getData();
+	// }, [getData]);
+
+	//===========================================//
 
 	const getIssues = async () => {
 		dispatch(getIssue({ page }));
@@ -46,7 +66,8 @@ function HomePage() {
 					</div>
 				);
 			})}
-			<Pagination result={list} page={page} setPage={setPage} />
+			<Pagination />
+			{/* <Pagination2 total={AllIssue} limit={per_page} page={page} /> */}
 		</div>
 	);
 }

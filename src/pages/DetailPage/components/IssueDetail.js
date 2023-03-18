@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetails } from 'reducer/loading';
 import styled from 'styled-components';
+import remarkGfm from 'remark-gfm';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 function IssueDetail({ number }) {
 	console.log(number);
@@ -12,7 +14,8 @@ function IssueDetail({ number }) {
 
 	useEffect(() => {
 		dispatch(getDetails(number));
-	});
+	}, [number]);
+
 	return (
 		<S.Wrapper>
 			<S.Title>{state.title}</S.Title>
@@ -22,7 +25,9 @@ function IssueDetail({ number }) {
 				<span>{state.created_at}</span>
 			</S.Info>
 			<br />
-			<S.Content>{state.body}</S.Content>
+			<S.Content>
+				<ReactMarkdown remarkPlugins={[remarkGfm]}>{state.body}</ReactMarkdown>
+			</S.Content>
 		</S.Wrapper>
 	);
 }
