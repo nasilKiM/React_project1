@@ -11,6 +11,7 @@ import Pagination from './components/Pagination';
 
 function HomePage() {
 	const [page, setPage] = useState(1);
+	const [perPage, setPerPage] = useState(10);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -37,18 +38,18 @@ function HomePage() {
 	//===========================================//
 
 	const getIssues = async () => {
-		dispatch(getIssue({ page }));
+		dispatch(getIssue({ page, per_page: perPage }));
 	};
 	useEffect(() => {
 		console.log('useEffect', list);
 		getIssues();
-	}, [page]);
+	}, [page, perPage]);
 
 	return (
 		<div>
 			<S.Filters>
 				<ContentFiltering />
-				<ContentListFiltering />
+				<ContentListFiltering onChange={setPerPage} />
 			</S.Filters>
 			{loading ? (
 				<S.LoadingMessage>
