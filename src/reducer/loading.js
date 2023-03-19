@@ -8,15 +8,10 @@ import { Octokit } from 'octokit';
 
 // value
 const initialState = {
-	// loading: false,
+	loading: false,
 	lists: [],
 	details: [],
 	comments: [],
-	getIssueState: {
-		loading: true,
-		done: false,
-		err: null,
-	},
 };
 
 const octokit = new Octokit({
@@ -71,41 +66,41 @@ export const issueSlice = createSlice({
 		//issue 리스트 호출
 		[getIssue.pending.type]: (state, action) => {
 			// 호출 전
-			state.getIssueState.loading = true;
+			state.loading = true;
 		},
 		[getIssue.fulfilled.type]: (state, action) => {
 			// 성공
-			state.getIssueState.loading = false;
-			state.getIssueState.lists = action.payload;
+			state.loading = false;
+			state.lists = action.payload;
 		},
 		[getIssue.rejected.type]: (state, action) => {
 			// 실패
-			state.getIssueState.loading = false;
-			state.getIssueState.lists = [];
+			state.loading = false;
+			state.lists = [];
 		},
 		//디테일페이지
 		[getDetails.pending.type]: (state, action) => {
-			state.getIssueState.loading = true;
+			state.loading = true;
 		},
 		[getDetails.fulfilled.type]: (state, action) => {
-			state.getIssueState.loading = false;
-			state.getIssueState.details = action.payload;
+			state.loading = false;
+			state.details = action.payload;
 		},
 		[getDetails.rejected.type]: (state, action) => {
-			state.getIssueState.loading = false;
-			state.getIssueState.details = [];
+			state.loading = false;
+			state.details = [];
 		},
 		//코멘트
 		[getComments.pending.type]: (state, action) => {
-			state.getIssueState.loading = true;
+			state.loading = true;
 		},
 		[getComments.fulfilled.type]: (state, action) => {
-			state.getIssueState.loading = false;
-			state.getIssueState.comments = action.payload;
+			state.loading = false;
+			state.comments = action.payload;
 		},
 		[getComments.rejected.type]: (state, action) => {
-			state.getIssueState.loading = false;
-			state.getIssueState.comments = [];
+			state.loading = false;
+			state.comments = [];
 		},
 	},
 });

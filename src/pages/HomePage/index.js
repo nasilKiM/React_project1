@@ -66,7 +66,7 @@ function HomePage() {
 					</div>
 				);
 			})}
-			<Pagination />
+			<Pagination page={page} setPage={setPage} result={list} />
 			{/* <Pagination2 total={AllIssue} limit={per_page} page={page} /> */}
 		</div>
 	);
