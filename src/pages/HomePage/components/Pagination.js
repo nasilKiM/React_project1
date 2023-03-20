@@ -1,28 +1,35 @@
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 // 작업중...!!
-function Pagination({ result, page, setPage }) {
+function Pagination({ result, page }) {
+	const [searchParams, setSearchParams] = useSearchParams();
+
 	const page1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 	const page2 = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
 	const nextPage = () => {
 		if (page > 19) return;
-		setPage(page + 1);
+		searchParams.set('page', page + 1);
+		setSearchParams(searchParams);
 	};
 
 	const prevPage = () => {
 		if (page <= 1) return;
-		setPage(page - 1);
+		searchParams.set('page', page - 1);
+		setSearchParams(searchParams);
 	};
 
 	const dividePage = page <= 10 ? page1 : page2;
 
 	const firstPage = () => {
-		setPage(1);
+		searchParams.set('page', 1);
+		setSearchParams(searchParams);
 	};
 
 	const lastPage = () => {
-		setPage(20);
+		searchParams.set('page', 20);
+		setSearchParams(searchParams);
 	};
 
 	return (
@@ -34,7 +41,8 @@ function Pagination({ result, page, setPage }) {
 					return (
 						<button
 							onClick={() => {
-								setPage(p);
+								searchParams.set('page', p);
+								setSearchParams(searchParams);
 							}}
 							style={{ color: page === p ? 'red' : 'black' }}
 						>

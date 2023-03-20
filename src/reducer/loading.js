@@ -19,20 +19,23 @@ const octokit = new Octokit({
 });
 
 // list뿌려주기
-export const getIssue = createAsyncThunk('issue/getIssue', async ({ page }) => {
-	console.log('getIssue');
-	const result = await octokit.request(
-		'GET /repos/angular/angular-cli/issues',
-		{
-			owner: 'angular',
-			repo: 'angular-cli',
-			headers: {},
-			per_page: 10,
-			page: page,
-		},
-	);
-	return result.data;
-});
+export const getIssue = createAsyncThunk(
+	'issue/getIssue',
+	async ({ page, perPage }) => {
+		console.log('getIssue');
+		const result = await octokit.request(
+			'GET /repos/angular/angular-cli/issues',
+			{
+				owner: 'angular',
+				repo: 'angular-cli',
+				headers: {},
+				per_page: perPage,
+				page: page,
+			},
+		);
+		return result.data;
+	},
+);
 
 export const getDetails = createAsyncThunk('issue/getDetails', async id => {
 	console.log('reducer', id);

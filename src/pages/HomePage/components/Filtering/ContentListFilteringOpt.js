@@ -1,18 +1,19 @@
-import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-function ContentListFiltering({ onChange }) {
-	const [value, setValue] = useState(10);
+function ContentListFiltering({ perPage }) {
+	const [searchParams, setSearchParams] = useSearchParams();
 
 	const handleChange = e => {
+		console.log(e, e.target);
 		const value = e.target.value;
-		setValue(value);
-		onChange(value);
+		searchParams.set('filter', value);
+		setSearchParams(searchParams);
 	};
 
 	return (
 		<S.Wrapper>
-			<select value={value} onChange={handleChange}>
+			<select value={Number(searchParams.get('filter'))}>
 				<option value={10}>10개씩</option>
 				<option value={20}>20개씩</option>
 				<option value={50}>50개씩</option>

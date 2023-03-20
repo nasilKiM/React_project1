@@ -1,44 +1,55 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getIssue } from 'reducer/loading';
 import styled from 'styled-components';
 import ContentFiltering from './components/Filtering/ContentFilteringOpt';
 import ContentListFiltering from './components/Filtering/ContentListFilteringOpt';
 import IssueContent from './components/IssueContent';
 import Pagination from './components/Pagination';
-// import Pagination2 from 'components/Layout/Pagination/Pagination';
 
 function HomePage() {
-	const [page, setPage] = useState(1);
-	const [perPage, setPerPage] = useState(10);
+	// const [page, setPage] = useState(1);
+	// const [perPage, setPerPage] = useState(10);
+	const [searchParams] = useSearchParams();
+	const page = Number(searchParams.get('page') || '1');
+	const perPage = Number(searchParams.get('filter') || '10');
+	const pageFilter = searchParams.get('pageFilter');
+
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
 	const list = useSelector(state => state.issue.lists);
+	console.log(list);
 	const loading = useSelector(state => state.issue.loading);
 
-	//===========================================//
+	// 정렬조건문
+	let newList = list;
 
-	// const AllIssue = 200;
-	// const getIssueState = useSelector(state => state.issue.getIssueState);
+	if (pageFilter === 'byDate') {
+		newList = [...list].sort((a, b) => {
+			return (
+				new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+			);
+		});
+	}
 
-	// const { owner, repository, page, per_page } = useParams();
+	if (pageFilter === 'byComments') {
+		newList = [...list].sort((a, b) => {
+			return b.comments - a.comments;
+		});
+	}
 
-	// const getData = useCallback(async () => {
-	// 	dispatch(getIssue({ owner, repository, page, per_page }));
-	// }, [page, per_page]);
-
-	// useEffect(() => {
-	// 	if (getIssueState.loading === true) {
-	// 	}
-	// 	getData();
-	// }, [getData]);
-
-	//===========================================//
+	if (pageFilter === 'byCreated') {
+		newList = [...list].sort((a, b) => {
+			return (
+				new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+			);
+		});
+	}
 
 	const getIssues = async () => {
-		dispatch(getIssue({ page, per_page: perPage }));
+		dispatch(getIssue({ page, perPage }));
 	};
 	useEffect(() => {
 		console.log('useEffect', list);
@@ -48,15 +59,15 @@ function HomePage() {
 	return (
 		<div>
 			<S.Filters>
-				<ContentFiltering />
-				<ContentListFiltering onChange={setPerPage} />
+				<ContentFiltering pageFilter={pageFilter} />
+				<ContentListFiltering perPage={perPage} />
 			</S.Filters>
 			{loading ? (
 				<S.LoadingMessage>
 					<S.Spinner /> Loading...
 				</S.LoadingMessage>
 			) : null}
-			{list.map(v => {
+			{newList.map(v => {
 				return (
 					<div
 						onClick={() => {
@@ -67,7 +78,7 @@ function HomePage() {
 					</div>
 				);
 			})}
-			<Pagination page={page} setPage={setPage} result={list} />
+			<Pagination page={page} result={list} />
 			{/* <Pagination2 total={AllIssue} limit={per_page} page={page} /> */}
 		</div>
 	);
