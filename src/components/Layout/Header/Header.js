@@ -4,13 +4,9 @@ function BasicHeader() {
 	return (
 		<>
 			<S.Container>
-				<h1>GitHub</h1>
+				<h1>GitHub Issue 조회</h1>
 				<S.Nav>
-					<a>Hyunseo Koo</a>
 					<a>Nasil Kim</a>
-					<a>Jaehoon Lee</a>
-					<a>Juram Lee</a>
-					<a>Youngseung Jang</a>
 				</S.Nav>
 			</S.Container>
 		</>
